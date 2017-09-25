@@ -1,23 +1,20 @@
-<h1>Your Current Employees</h1>
+<h1>Your Current Divisions</h1>
 
-<% if @employees.any? %>
-  <h3>Here are your employees:</h3>
+<% if @divisions.any? %>
+  <h3>Here are your divisions:</h3>
 
   <ul>
-    <% @employees.each do |employee| %>
-      <li><a href="/employee/<%= employee.id()%>"><%= employee.name %></a> </li>
+    <% @divisions.each do |division| %>
+      <li><a href="/division/<%= division.id()%>"><%= division.division %></a> </li>
     <% end %>
   </ul>
 
 <% else %>
-
-    <p>There are no employees yet!</p>
-
+    <p>There are no divisions yet!</p>
 <% end %>
 
-
-<h2>Add a new employee:</h2>
+<h2>Add a new division:</h2>
 <form action="/" method="post">
-  <input type="text" name="name">
-  <button type="submit">Create Employee</button>
+  <input type="text" name="division">
+  <button type="submit">Create division</button>
 </form>

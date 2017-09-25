@@ -8,32 +8,55 @@ require('pg')
 require('pry')
 
 get('/') do
-  @employees = Employee.all
+  @divisions = Division.all
   erb(:index)
 end
 
 post('/') do
-  name = params['name']
-  new_employee = Employee.create({:name => name})
-  @employees = Employee.all
+  division = params['division']
+  new_division = Division.create({:division => division})
+  @divisions = Division.all
   erb(:index)
 end
 
+get('/division/:id') do
+  @division = Division.find(params["id"].to_i)
+  # binding.pry
+  @employees = @division.employees
+  erb(:division)
+end
+
+post('/division/:id') do
+  division_id = params[:id]
+  name = params['name']
+  @division = Division.find(params["id"].to_i)
+  new_employee = Employee.create({:name => name, :division_id => division_id})
+  @employees = @division.employees
+  erb(:division)
+end
+
+# post('/employee') do
+#   name = params['name']
+#   new_employee = Employee.create({:name => name})
+#   @employees = Employee.all
+#   erb(:index)
+# end
+#
 get('/employee/:id') do
   employee_id = params[:id]
   @employee = Employee.find(params.fetch("id").to_i())
   erb(:employee)
 end
-
+#
 get('/employee/:id/edit') do
   @employee = Employee.find(params.fetch("id").to_i())
   erb(:employee_edit)
 end
-
+#
 patch("/employee/:id") do
   name = params.fetch("name")
   @employee = Employee.find(params.fetch("id").to_i())
   @employee.update({:name => name})
   @employees = Employee.all()
-  erb(:index)
+  redirect("/employee/#{@employee.id}")
 end

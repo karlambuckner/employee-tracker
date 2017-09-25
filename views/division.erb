@@ -1,0 +1,28 @@
+<h1>Your Current Employees</h1>
+
+<% if @employees.any? %>
+  <h3>Here are your Employees:</h3>
+
+  <ul>
+    <% @employees.each do |employee| %>
+      <li><a href="/employee/<%= employee.id()%>"><%= employee.name %></a> </li>
+    <% end %>
+  </ul>
+
+<% else %>
+
+    <p>There are no employees yet!</p>
+
+<% end %>
+
+
+<h2>Add a new employee:</h2>
+<form action="/division/<%= @division.id %>" method="post">
+  <input type="text" name="name">
+  <button type="submit">Create Employee</button>
+</form>
+
+<br>
+<div class="container">
+  <a href="/"><button class="btn">Return Home</a>
+</div>
